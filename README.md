@@ -12,7 +12,7 @@ A small script which auto-deploys a dockerized instance of osu!web [built for di
 
 ## Usage
 
-1. Adjust `ports.dat` to a desired starting port. This port is mapped to port `80` in the dockerized instances.
+1. Adjust `ports.dat` to a desired starting port. This port is mapped to port `80` in the dockerized instances, and is incremented by 1 with each deploy.
 2. Adjust `((YOUR-DOMAIN-HERE))` in `nginx.tpl` to point to the domain of your choice.  
   **Note:** Do NOT edit the `{DOMAIN}` or `{PORT}` fields.
 3. Create a directory with the desired **sub**domain name.
