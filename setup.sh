@@ -40,12 +40,44 @@ if [[ -z "${ES_BRANCH}" ]]; then
 	ES_BRANCH=master
 fi
 
-echo "Using:
-$OSU_SERVER_REPO -> $OSU_SERVER_BRANCH
-$OSU_REPO -> $OSU_BRANCH
-$PP_REPO -> $PP_BRANCH
-$WEB_REPO -> $WEB_BRANCH
-$ES_REPO -> $ES_BRANCH
+if [[ -z "${MODE}" ]]; then
+	MODE=0
+fi
+
+case "${MODE}" in
+	0)
+		MODE_LITERAL=osu
+		;;
+	1)
+		MODE_LITERAL=taiko
+		;;
+	2)
+		MODE_LITERAL=catch
+		;;
+	3)
+		MODE_LITERAL=mania
+		;;
+esac
+
+echo "
+Environment:
+
+OSU_SERVER_REPO = $OSU_SERVER_REPO
+OSU_SERVER_BRANCH = $OSU_SERVER_BRANCH
+
+OSU_REPO = $OSU_REPO
+OSU_BRANCH = $OSU_BRANCH
+
+PP_REPO = $PP_REPO
+PP_BRANCH = $PP_BRANCH
+
+WEB_REPO = $WEB_REPO
+WEB_BRANCH = $WEB_BRANCH
+
+ES_REPO = $ES_REPO
+ES_BRANCH = $ES_BRANCH
+
+MODE = $MODE ($MODE_LITERAL)
 "
 
 read -p "Press enter to continue"
@@ -119,7 +151,6 @@ CURR_PORT=$(cat $PORT_FILE)
 echo $CURR_PORT > $PORT_FILE
 
 echo "Setting up on port $CURR_PORT"
-export NGINX_PORT=$CURR_PORT
 
 # Nginx
 SUBDOMAIN=${PWD##*/}
@@ -133,4 +164,8 @@ sed -i "s/{PORT}/$CURR_PORT/g" $SITE_FILE
 
 # Docker
 export UID
+export NGINX_PORT=$CURR_PORT
+export MODE=$MODE
+export MODE_LITERAL=$MODE_LITERAL
+
 docker-compose up
