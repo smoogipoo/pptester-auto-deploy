@@ -85,82 +85,81 @@ read -p "Press enter to continue"
 DATA_DIR=~/data
 DIR=$(pwd)
 
-PORT_FILE=$DATA_DIR/port.dat
-NGINX_TEMPLATE=$DATA_DIR/nginx.tpl
-
 # osu-web
-echo "Cloning $WEB_REPO into $(pwd)..."
+	echo "Cloning $WEB_REPO into $(pwd)..."
 
-git clone https://github.com/$WEB_REPO .
-git checkout -f origin/$WEB_BRANCH
+	git clone https://github.com/$WEB_REPO .
+	git checkout -f origin/$WEB_BRANCH
 
 # osu-performance
-mkdir -p $DIR/osu-performance
-cd $DIR/osu-performance
+	mkdir -p $DIR/osu-performance
+	cd $DIR/osu-performance
 
-echo "Cloning $PP_REPO into $(pwd)..."
+	echo "Cloning $PP_REPO into $(pwd)..."
 
-git clone --recurse-submodules https://github.com/$PP_REPO .
-git checkout -f origin/$PP_BRANCH
-git submodule update --init --recursive
+	git clone --recurse-submodules https://github.com/$PP_REPO .
+	git checkout -f origin/$PP_BRANCH
+	git submodule update --init --recursive
 
 # osu-server
-mkdir -p $DIR/osu-server
-cd $DIR/osu-server
+	mkdir -p $DIR/osu-server
+	cd $DIR/osu-server
 
-echo "Cloning $OSU_SERVER_REPO into $(pwd)..."
+	echo "Cloning $OSU_SERVER_REPO into $(pwd)..."
 
-# Note: No submodule recursion due to custom osu! repo
-git clone https://github.com/$OSU_SERVER_REPO .
-git checkout -f origin/$OSU_SERVER_BRANCH
+	## Note: No submodule recursion due to custom osu! repo
+	git clone https://github.com/$OSU_SERVER_REPO .
+	git checkout -f origin/$OSU_SERVER_BRANCH
 
 # osu
-mkdir -p $DIR/osu-server/osu
-cd $DIR/osu-server/osu
+	mkdir -p $DIR/osu-server/osu
+	cd $DIR/osu-server/osu
 
-echo "Cloning $OSU_REPO into $(pwd)..."
+	echo "Cloning $OSU_REPO into $(pwd)..."
 
-git clone --recurse-submodules https://github.com/$OSU_REPO .
-git checkout -f origin/$OSU_BRANCH
+	git clone --recurse-submodules https://github.com/$OSU_REPO .
+	git checkout -f origin/$OSU_BRANCH
 
 # es
-mkdir -p $DIR/osu-elastic-indexer
-cd $DIR/osu-elastic-indexer
+	mkdir -p $DIR/osu-elastic-indexer
+	cd $DIR/osu-elastic-indexer
 
-echo "Cloning $ES_REPO into $(pwd)..."
+	echo "Cloning $ES_REPO into $(pwd)..."
 
-git clone --recurse-submodules https://github.com/$ES_REPO .
-git checkout -f origin/$ES_BRANCH
+	git clone --recurse-submodules https://github.com/$ES_REPO .
+	git checkout -f origin/$ES_BRANCH
 
 # Setup
-echo "Pre-run setup..."
-cd $DIR
+	echo "Pre-run setup..."
+	cd $DIR
 
-# SQL + Beatmap files
-ln -s -f $DATA_DIR/sql $DIR/sql
-ln -s -f $DATA_DIR/beatmaps $DIT/beatmaps
+	# SQL + Beatmap files
+		ln -s -f $DATA_DIR/sql $DIR/sql
+		ln -s -f $DATA_DIR/beatmaps $DIT/beatmaps
 
-# Port
-CURR_PORT=$(cat $PORT_FILE)
-((CURR_PORT++))
-echo $CURR_PORT > $PORT_FILE
+	# Port
+		PORT_FILE=$DATA_DIR/port.dat
+		CURR_PORT=$(cat $PORT_FILE)
+		((CURR_PORT++))
+		echo $CURR_PORT > $PORT_FILE
 
-echo "Setting up on port $CURR_PORT"
+		echo "Setting up on port $CURR_PORT"
 
-# Nginx
-SUBDOMAIN=${PWD##*/}
-SITE_FILE=/etc/nginx/sites-enabled/$SUBDOMAIN
+	# Nginx
+		NGINX_TEMPLATE=$DATA_DIR/nginx.tpl
+		SUBDOMAIN=${PWD##*/}
+		SITE_FILE=/etc/nginx/sites-enabled/$SUBDOMAIN
 
-echo "Using subdomain $SUBDOMAIN"
+		echo "Using subdomain $SUBDOMAIN"
 
-cp $NGINX_TEMPLATE $SITE_FILE
-sed -i "s/{DOMAIN}/$SUBDOMAIN/g" $SITE_FILE
-sed -i "s/{PORT}/$CURR_PORT/g" $SITE_FILE
+		cp $NGINX_TEMPLATE $SITE_FILE
+		sed -i "s/{DOMAIN}/$SUBDOMAIN/g" $SITE_FILE
+		sed -i "s/{PORT}/$CURR_PORT/g" $SITE_FILE
 
 # Docker
-export UID
-export NGINX_PORT=$CURR_PORT
-export MODE=$MODE
-export MODE_LITERAL=$MODE_LITERAL
+	export UID
+	export NGINX_PORT=$CURR_PORT
+	export MODE=$MODE
+	export MODE_LITERAL=$MODE_LITERAL
 
-docker-compose up
+	docker-compose up
