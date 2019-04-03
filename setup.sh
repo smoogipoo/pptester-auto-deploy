@@ -132,18 +132,13 @@ echo "Cloning $ES_REPO into $(pwd)..."
 git clone --recurse-submodules https://github.com/$ES_REPO .
 git checkout -f origin/$ES_BRANCH
 
-# SQL + Beatmap files
-echo "Copying data..."
-
-rm -rf $DIR/beatmaps
-rm -rf $DIR/sql
-
-cp -r $DATA_DIR/sql $DIR
-cp -r $DATA_DIR/beatmaps $DIR
-
 # Setup
 echo "Pre-run setup..."
 cd $DIR
+
+# SQL + Beatmap files
+ln -s -f $DATA_DIR/sql $DIR/sql
+ln -s -f $DATA_DIR/beatmaps $DIT/beatmaps
 
 # Port
 CURR_PORT=$(cat $PORT_FILE)
