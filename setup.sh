@@ -135,7 +135,7 @@ DIR=$(pwd)
 
 	# SQL + Beatmap files
 		ln -s -f $DATA_DIR/sql $DIR/sql
-		ln -s -f $DATA_DIR/beatmaps $DIT/beatmaps
+		ln -s -f $DATA_DIR/beatmaps $DIR/beatmaps
 
 	# Port
 		PORT_FILE=$DATA_DIR/port.dat
