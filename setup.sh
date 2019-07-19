@@ -82,7 +82,7 @@ MODE = $MODE ($MODE_LITERAL)
 
 read -p "Press enter to continue"
 
-DATA_DIR=~/data
+DATA_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 DIR=$(pwd)
 
 # osu-web
