@@ -156,9 +156,19 @@ DIR=$(pwd)
 		sed -i "s/{DOMAIN}/$SUBDOMAIN/g" $SITE_FILE
 		sed -i "s/{PORT}/$CURR_PORT/g" $SITE_FILE
 
+	# Environment
+		if $(grep -q 'ssl' $NGINX_TEMPLATE); then
+			HTTP_SCHEME='https'
+		else
+			HTTP_SCHEME='http'
+		fi
+
+		HTTP_HOST=$(sed -n 's/^.*server_name\s*\(.*\);$/\1/p' $NGINX_TEMPLATE)
+
 # Docker
 	export UID
 	export NGINX_PORT=$CURR_PORT
+	export HTTP_URL="$HTTP_SCHEME://$HTTP_HOST"
 	export MODE=$MODE
 	export MODE_LITERAL=$MODE_LITERAL
 
