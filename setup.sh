@@ -172,4 +172,4 @@ DIR=$(pwd)
 	export MODE=$MODE
 	export MODE_LITERAL=$MODE_LITERAL
 
-	docker-compose up
+	./bin/docker_dev.sh
