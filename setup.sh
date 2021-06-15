@@ -119,8 +119,6 @@ DIR=$(pwd)
 
     git clone https://github.com/$OSU_SERVER_REPO .
     git checkout -f origin/$OSU_SERVER_BRANCH
-
-    ./UseLocalOsu.sh
     git submodule update --init --recursive
 
 # es
