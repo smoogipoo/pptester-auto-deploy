@@ -101,24 +101,25 @@ DIR=$(pwd)
 	git checkout -f origin/$PP_BRANCH
 	git submodule update --init --recursive
 
+# osu
+	mkdir -p $DIR/osu
+	cd $DIR/osu
+
+	echo "Cloning $OSU_REPO into $(pwd)..."
+
+	git clone --recurse-submodules https://github.com/$OSU_REPO .
+	git checkout -f origin/$OSU_BRANCH
+
 # osu-server
 	mkdir -p $DIR/osu-server
 	cd $DIR/osu-server
 
 	echo "Cloning $OSU_SERVER_REPO into $(pwd)..."
 
-	## Note: No submodule recursion due to custom osu! repo
-	git clone https://github.com/$OSU_SERVER_REPO .
+	git clone --recurse-submodules https://github.com/$OSU_SERVER_REPO .
 	git checkout -f origin/$OSU_SERVER_BRANCH
 
-# osu
-	mkdir -p $DIR/osu-server/osu
-	cd $DIR/osu-server/osu
-
-	echo "Cloning $OSU_REPO into $(pwd)..."
-
-	git clone --recurse-submodules https://github.com/$OSU_REPO .
-	git checkout -f origin/$OSU_BRANCH
+    ./UseLocalOsu.sh
 
 # es
 	mkdir -p $DIR/osu-elastic-indexer
