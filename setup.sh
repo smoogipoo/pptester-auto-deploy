@@ -97,7 +97,7 @@ DIR=$(pwd)
 
     echo "Cloning $PP_REPO into $(pwd)..."
 
-    git clone --recurse-submodules https://github.com/$PP_REPO .
+    git clone https://github.com/$PP_REPO .
     git checkout -f origin/$PP_BRANCH
     git submodule update --init --recursive
 
@@ -107,8 +107,9 @@ DIR=$(pwd)
 
     echo "Cloning $OSU_REPO into $(pwd)..."
 
-    git clone --recurse-submodules https://github.com/$OSU_REPO .
+    git clone https://github.com/$OSU_REPO .
     git checkout -f origin/$OSU_BRANCH
+    git submodule update --init --recursive
 
 # osu-server
     mkdir -p $DIR/osu-server
@@ -116,10 +117,11 @@ DIR=$(pwd)
 
     echo "Cloning $OSU_SERVER_REPO into $(pwd)..."
 
-    git clone --recurse-submodules https://github.com/$OSU_SERVER_REPO .
+    git clone https://github.com/$OSU_SERVER_REPO .
     git checkout -f origin/$OSU_SERVER_BRANCH
 
     ./UseLocalOsu.sh
+    git submodule update --init --recursive
 
 # es
     mkdir -p $DIR/osu-elastic-indexer
@@ -127,8 +129,9 @@ DIR=$(pwd)
 
     echo "Cloning $ES_REPO into $(pwd)..."
 
-    git clone --recurse-submodules https://github.com/$ES_REPO .
+    git clone https://github.com/$ES_REPO .
     git checkout -f origin/$ES_BRANCH
+    git submodule update --init --recursive
 
 # Setup
     echo "Pre-run setup..."
