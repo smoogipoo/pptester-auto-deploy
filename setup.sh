@@ -149,7 +149,7 @@ DIR=$(pwd)
     # Nginx
         NGINX_TEMPLATE=$DATA_DIR/nginx.tpl
         SUBDOMAIN=${PWD##*/}
-        SITE_FILE=/etc/nginx/sites-enabled/$SUBDOMAIN
+        SITE_FILE=/etc/nginx/conf.d/$SUBDOMAIN
 
         echo "Using subdomain $SUBDOMAIN"
 
