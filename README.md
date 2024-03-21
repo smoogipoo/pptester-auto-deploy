@@ -1,5 +1,8 @@
 # pptester auto deploy script
 
+> [!NOTE]
+> This is no longer supported or in use. Use [**diffcalc-sheet-generator**](https://github.com/smoogipoo/diffcalc-sheet-generator) instead.
+
 A small script which auto-deploys a dockerized instance of osu!web [built for difficulty + pp calculation](https://github.com/smoogipoo/osu-web/tree/pp-tester).
 
 ## Requirements
